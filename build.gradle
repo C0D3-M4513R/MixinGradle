@@ -14,7 +14,7 @@ ext.ciSystem = project.hasProperty("ciSystem") ? ciSystem : 'unknown'
 ext.commit = project.hasProperty("commit") ? commit : 'unknown'
 
 group = 'org.spongepowered'
-version = buildType == 'SNAPSHOT' ? "$buildVersion-SNAPSHOT" : gradleutils.tagOffsetVersion
+version = System.getenv("VERSION")
 archivesBaseName = 'mixingradle'
 sourceCompatibility = targetCompatibility = '1.8'
 
@@ -92,7 +92,7 @@ publishing {
         pluginMaven(MavenPublication) {
             // Automated publishing declares the java component for us
 
-            groupId = project.group
+            groupId = 'org.kettingpowered.patched.spongepowered'
             version = project.version
             artifactId = project.archivesBaseName
 
@@ -124,33 +124,21 @@ publishing {
         }
     }
     repositories {
-        if (buildType == 'RELEASE') {
-            if (project.hasProperty("releaseRepo")) {
-                maven {
-                    credentials {
-                        username = project.releaseRepoUsername
-                        password = project.releaseRepoPassword
-                    }
-                    url project.releaseRepo
-                }
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/kettingpowered/Ketting-1-20-x")
+            credentials {
+                username = System.getenv("GITHUB_ACTOR")
+                password = System.getenv("GITHUB_TOKEN")
             }
-            if (project.hasProperty("spongeReleaseRepo")) {
-                maven {
-                    credentials {
-                        username = project.spongeUsername
-                        password = project.spongePassword
-                    }
-                    url project.spongeReleaseRepo
-                }
+        }
+        maven {
+            name = 'kettingRepo'
+            credentials {
+                username = System.getenv("KETTINGUSERNAME")
+                password = System.getenv("KETTINGPASSWORD")
             }
-        } else if (project.hasProperty("spongeSnapshotRepo")) {
-            maven {
-                credentials {
-                    username = project.spongeUsername
-                    password = project.spongePassword
-                }
-                url project.spongeSnapshotRepo
-            }
+            url = "https://reposilite.c0d3m4513r.com/Ketting/"
         }
     }
 }
