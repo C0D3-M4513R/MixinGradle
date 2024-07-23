@@ -22,16 +22,16 @@ jobs:
         with:
           java-version: '8'
           distribution: 'temurin'
-      - name: Cache .gradle
-        uses: burrunan/gradle-cache-action@v1
-        with:
-          # Enable concurrent cache save and restore
-          # Default is concurrent=false for better log readability
-          concurrent: true
-          # Disable caching of $HOME/.gradle/caches/*.*/generated-gradle-jars
-          save-generated-gradle-jars: false
-          # Disable publishing Gradle Build Scan URL to job report #Don't
-          gradle-build-scan-report: true
+#      - name: Cache .gradle
+#        uses: burrunan/gradle-cache-action@v1
+#        with:
+#          # Enable concurrent cache save and restore
+#          # Default is concurrent=false for better log readability
+#          concurrent: true
+#          # Disable caching of $HOME/.gradle/caches/*.*/generated-gradle-jars
+#          save-generated-gradle-jars: false
+#          # Disable publishing Gradle Build Scan URL to job report #Don't
+#          gradle-build-scan-report: true
       - name: Validate Gradle wrapper
         uses: gradle/wrapper-validation-action@v1
       - name: Setup Gradle
