@@ -130,7 +130,7 @@ public class MixinExtension {
         @Override
         protected void addMappingFile(File mappingFile) {
             def add = [
-                '--srg-in', mappingFile.absolutePath
+                '--names', mappingFile.absolutePath
             ]
             if (this.reobfTask.args instanceof ListProperty) {
                 this.reobfTask.args.addAll(add)
